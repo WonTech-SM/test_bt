@@ -1,59 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+    background-color: #f0f2f5;
+    padding: 20px;
 }
 
 .container {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-  margin-bottom: 10px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-#inputText {
-  width: 100%;
-  height: 80px;
-  margin: 15px 0;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  resize: none;
+.status-container {
+    margin-bottom: 20px;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 8px;
-  border: none;
-  background: #007bff;
-  color: #fff;
+.status {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
 }
 
-button:disabled {
-  background: #aaa;
-  cursor: not-allowed;
+.connected {
+    background-color: #4CAF50;
+    color: white;
 }
 
-#receivedData {
-  background: #e9e9e9;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-  min-height: 40px;
+.disconnected {
+    background-color: #f44336;
+    color: white;
 }
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.message-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#message-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2196F3;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #1976D2;
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.log-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.log-container h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#message-log {
+    font-family: monospace;
+}
+
+#message-log p {
+    margin: 5px 0;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+#message-log p:last-child {
+    border-bottom: none;
+} 
