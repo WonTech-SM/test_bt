@@ -23,23 +23,38 @@ async function connect() {
         logMessage('Intentando conectar...');
         
         device = await navigator.bluetooth.requestDevice({
-            filters: [{ name: 'ESP32_BLE_TEST' }],
+            acceptAllDevices: true,
             optionalServices: [SERVICE_UUID]
         });
+
+        logMessage(`Dispositivo seleccionado: ${device.name || 'Dispositivo sin nombre'}`);
 
         device.addEventListener('gattserverdisconnected', onDisconnected);
 
         const server = await device.gatt.connect();
+        logMessage('Conectado al servidor GATT');
+
         const service = await server.getPrimaryService(SERVICE_UUID);
+        logMessage('Servicio encontrado');
+
         characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
+        logMessage('Característica encontrada');
 
         characteristic.addEventListener('characteristicvaluechanged', handleNotifications);
         await characteristic.startNotifications();
+        logMessage('Notificaciones iniciadas');
 
         updateUI(true);
         logMessage('Conectado exitosamente');
     } catch (error) {
         logMessage(`Error de conexión: ${error.message}`);
+        if (error.message.includes('User cancelled')) {
+            logMessage('El usuario canceló la selección del dispositivo');
+        } else if (error.message.includes('GATT Server is disconnected')) {
+            logMessage('El servidor GATT está desconectado');
+        } else if (error.message.includes('Service not found')) {
+            logMessage('Servicio no encontrado. Verifica que el ESP32 esté ejecutando el código correcto');
+        }
     }
 }
 
