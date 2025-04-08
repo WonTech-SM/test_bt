@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conexión BLE con ESP32</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>BLE ESP32</h1>
+    <button id="connectBtn">Conectar al ESP32</button>
+    
+    <div id="connectionStatus">Estado: Desconectado</div>
+
+    <textarea id="inputText" placeholder="Escribe tu mensaje aquí..."></textarea>
+    <button id="sendBtn" disabled>Enviar</button>
+
+    <h2>Respuesta del ESP32:</h2>
+    <div id="receivedData">Esperando datos...</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+#inputText {
+  width: 100%;
+  height: 80px;
+  margin: 15px 0;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+}
+
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+#receivedData {
+  background: #e9e9e9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  min-height: 40px;
+}
