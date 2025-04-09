@@ -1,7 +1,9 @@
 const SERVICE_UUID = '4fafc201-1fb5-459e-8fcc-c5c9c331914b';
 const CHARACTERISTIC_UUID = 'beb5483e-36e1-4688-b7f5-ea07361b26a8';
-const DEVICE_INFO_SERVICE_UUID = '180A';
-const MANUFACTURER_NAME_CHAR_UUID = '2A29';
+const DEVICE_INFO_SERVICE_UUID = '0000180a-0000-1000-8000-00805f9b34fb';
+const MANUFACTURER_NAME_CHAR_UUID = '00002a29-0000-1000-8000-00805f9b34fb';
+const GENERIC_ACCESS_SERVICE_UUID = '00001800-0000-1000-8000-00805f9b34fb';
+const GENERIC_ATTRIBUTE_SERVICE_UUID = '00001801-0000-1000-8000-00805f9b34fb';
 
 let device = null;
 let characteristic = null;
@@ -36,8 +38,8 @@ async function connect() {
             optionalServices: [
                 SERVICE_UUID,
                 DEVICE_INFO_SERVICE_UUID,
-                'generic_access',
-                'generic_attribute'
+                GENERIC_ACCESS_SERVICE_UUID,
+                GENERIC_ATTRIBUTE_SERVICE_UUID
             ]
         });
 
