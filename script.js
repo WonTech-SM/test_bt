@@ -23,16 +23,36 @@ async function connect() {
         logMessage('Intentando conectar...');
         
         device = await navigator.bluetooth.requestDevice({
-            acceptAllDevices: true,
+            filters: [
+                {
+                    name: 'ESP32_BLE_TEST',  // Nombre exacto del ESP32
+                },
+                {
+                    namePrefix: 'ESP32',  // Cualquier dispositivo que empiece con ESP32
+                }
+            ],
             optionalServices: [SERVICE_UUID]
         });
 
         logMessage(`Dispositivo seleccionado: ${device.name || 'Dispositivo sin nombre'}`);
+        logMessage(`ID del dispositivo: ${device.id}`);
+        logMessage(`Conectado: ${device.gatt.connected}`);
 
         device.addEventListener('gattserverdisconnected', onDisconnected);
 
         const server = await device.gatt.connect();
         logMessage('Conectado al servidor GATT');
+
+        // Obtener información adicional del dispositivo
+        const deviceInfo = await server.getPrimaryService('device_information');
+        try {
+            const manufacturerName = await deviceInfo.getCharacteristic('manufacturer_name_string');
+            const value = await manufacturerName.readValue();
+            const decoder = new TextDecoder('utf-8');
+            logMessage(`Fabricante: ${decoder.decode(value)}`);
+        } catch (e) {
+            logMessage('No se pudo obtener información del fabricante');
+        }
 
         const service = await server.getPrimaryService(SERVICE_UUID);
         logMessage('Servicio encontrado');
