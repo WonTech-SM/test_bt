@@ -23,29 +23,42 @@ async function connect() {
         logMessage('Intentando conectar...');
         
         device = await navigator.bluetooth.requestDevice({
-            acceptAllDevices: true,
+            filters: [
+                {
+                    services: [SERVICE_UUID]
+                }
+            ],
             optionalServices: [SERVICE_UUID]
         });
 
         logMessage(`Dispositivo seleccionado: ${device.name || 'Dispositivo sin nombre'}`);
+        logMessage(`ID del dispositivo: ${device.id}`);
+        logMessage(`Servicios anunciados: ${device.uuids ? device.uuids.join(', ') : 'Ninguno'}`);
 
         device.addEventListener('gattserverdisconnected', onDisconnected);
 
         const server = await device.gatt.connect();
         logMessage('Conectado al servidor GATT');
 
-        const service = await server.getPrimaryService(SERVICE_UUID);
-        logMessage('Servicio encontrado');
+        try {
+            const service = await server.getPrimaryService(SERVICE_UUID);
+            logMessage('Servicio encontrado');
+            
+            characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
+            logMessage('Característica encontrada');
 
-        characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
-        logMessage('Característica encontrada');
+            characteristic.addEventListener('characteristicvaluechanged', handleNotifications);
+            await characteristic.startNotifications();
+            logMessage('Notificaciones iniciadas');
 
-        characteristic.addEventListener('characteristicvaluechanged', handleNotifications);
-        await characteristic.startNotifications();
-        logMessage('Notificaciones iniciadas');
-
-        updateUI(true);
-        logMessage('Conectado exitosamente');
+            updateUI(true);
+            logMessage('Conectado exitosamente');
+        } catch (serviceError) {
+            logMessage(`Error al acceder al servicio: ${serviceError.message}`);
+            const services = await server.getPrimaryServices();
+            logMessage(`Servicios disponibles: ${services.map(s => s.uuid).join(', ')}`);
+            throw serviceError;
+        }
     } catch (error) {
         logMessage(`Error de conexión: ${error.message}`);
         if (error.message.includes('User cancelled')) {
